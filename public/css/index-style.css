@@ -1,0 +1,49 @@
+body{
+    background-color: whitesmoke;
+   
+    
+}
+#page-content{
+    text-align: center;
+    padding-bottom: 1%;
+}
+h1{
+    text-align: center;
+    color:#3399ff;
+    font-size: 100px;
+    padding-top: 10%;
+    margin-bottom: 1%;
+    
+}
+
+h2{
+     text-align: center;
+      color:#0000b3
+}
+
+
+
+#chatid{
+    width:40%;
+    height:48px;
+    border: none;
+    border-radius: 2px;
+    margin-right: 5px;
+    font-size: 16px;
+}
+#enterRoom{
+   height: 50px;
+  padding: 15px 15px;
+  background-color: #3399ff; 
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+#enterRoom:hover{
+   
+  background-color: #0000b3; 
+  cursor:pointer;
+}
