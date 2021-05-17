@@ -1,0 +1,49 @@
+body{
+    background-color: whitesmoke;
+    
+}
+
+#form{
+
+    position: absolute;
+    bottom: 0;
+    width:100%;
+    border-radius: 20px;
+    
+}
+#input{
+    width:94%;
+    height:50px;
+    border: none;
+    border-radius: 2px;
+    margin-right: 5px;
+}
+button{
+  height: 50px;
+  padding: 15px 15px;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+button:hover{
+    background-color: green;
+    cursor:pointer;
+}
+
+#messages li{
+   
+    width:90%;
+    background-color: white;
+    border-radius: 5px;
+    display: block;
+    padding: 20px;
+    margin-left: auto;
+    margin-top: 1%;
+    margin-right: auto;
+    box-shadow: 5px 10px 18px #888888;
+}
+    
