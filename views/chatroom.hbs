@@ -1,9 +1,60 @@
+    <div id ="video-area">
+      <video autoplay="true" id="videoElement" class="videos"></video>
 
-    <ul id="messages">
-    </ul>
+      <div id ="control-area">
+        <button id="video"class="controls" onclick="changeVideo()">&#128249;</button>
+        <button id="audio" class="controls" onclick="changeAudio()"> &#x1F508;</button>
+      </div>
+    </div>
+    <div id="chat-area">
+    <ul id="messages"></ul>
     <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
+      <input id="input" autocomplete="off" /><button id="send-button">Send</button>
     </form>
+    </div>
+
+    <script>
+      var video=true;
+      var audio=true;
+
+      function changeVideo() {
+        if(video==true){
+        document.getElementById('video').innerHTML="No video";
+        video=false;
+        }
+        else{
+           document.getElementById('video').innerHTML="&#128249;";
+          video=true;
+        }
+      }
+
+       function changeAudio() {
+         if(audio==true){
+        document.getElementById('audio').innerHTML="&#128263;";
+        audio=false;
+        }
+        else{
+          document.getElementById('audio').innerHTML="&#x1F508;";
+          audio=true;
+        }
+        
+        
+      }
+
+      var video = document.querySelector("#videoElement");
+
+if (navigator.mediaDevices.getUserMedia) {
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+      video.srcObject = stream;
+    })
+    .catch(function (err0r) {
+      console.log("Something went wrong!");
+    });
+}
+    </script>
+
+
     <script>
       var socket = io();
 
@@ -17,6 +68,13 @@
           socket.emit('chat message', input.value);
           input.value = '';
         }
+      });
+
+      //Issue: the messages are emitted to all the rooms
+      var room ="{{title}}"
+      socket.on('connect', function() {
+        // Connected, let's sign-up for to receive messages for this room
+         socket.emit('room', '{{title}}');
       });
 
       socket.on('chat message', function(msg) {
