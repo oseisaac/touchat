@@ -74,5 +74,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 
 
+<!-- CONTACT -->
+## Contact
 
+Ahmed Abdelfattah - [@ahmedwab](https://linkedin.com/in/ahmedwab) - linkedin
 

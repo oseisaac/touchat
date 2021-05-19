@@ -34,7 +34,7 @@ h2{
 #enterRoom{
    height: 50px;
   padding: 15px 15px;
-  background-color: #3399ff; 
+  background-color: #52a39e; 
   border: none;
   color: white;
   text-align: center;
@@ -44,6 +44,6 @@ h2{
 }
 #enterRoom:hover{
    
-  background-color: #0000b3; 
+  background-color: #0a192f; 
   cursor:pointer;
 }
