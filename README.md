@@ -3,8 +3,6 @@
 
 A chat application that allows video conferencing.
 
-Progress and deployed app could be found here: https://touchat-app.herokuapp.com
-
 
 <!-- GETTING STARTED -->
 ## Getting Started

@@ -16,10 +16,12 @@ app.engine('hbs',hbs({
     layoutsDir: __dirname + '/views/layouts/'
 }));
 
-app.use(express.static('public/images')); 
+
 app.set('view engine','hbs');
+app.use(express.static('public'))
 
 app.use("/css",express.static(__dirname + '/public/css'))
+app.use("/images",express.static(__dirname + '/public/images'))
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 const urlencodeParser = bodyParser.urlencoded({extended:false})
@@ -28,19 +30,23 @@ const urlencodeParser = bodyParser.urlencoded({extended:false})
 //GET methods
 app.get('/chatroom/:id', (req, res) => {
   let id = req.params.id;
+  let name = req.query.name;
   res.render('chatroom',{
     title:"Touchat | "+id,
     style:"../css/chat-style.css",
-    image:'../logo.png'
+    image:'../images/logo.png',
+    name: name
     
   })
 });
 app.get('/chatroom/', (req, res) => {
   let id = req.query.chatid;
+  let name = req.query.name;
   res.render('chatroom',{
     title:"Touchat | "+id,
     style:"/css/chat-style.css",
-    image:'logo.png'
+    image:'images/logo.png',
+    name: name
     
   })
 });
@@ -62,9 +68,17 @@ io.on('connection', (socket) => {
     socket.on('chat message', msg => {
       io.to(room).emit('chat message', msg);
     });
-  console.log(room)
 });
+/*
+socket.on('join-room', (roomId, userId) => {
+  socket.join(roomId)
+  socket.to(roomId).broadcast.emit('user-connected', userId)
 
+  socket.on('disconnect', () => {
+    socket.to(roomId).broadcast.emit('user-disconnected', userId)
+  })
+})
+*/
 });
 
 http.listen(port, () => {
