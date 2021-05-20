@@ -146,7 +146,7 @@ body{
     margin-left: auto;
     box-shadow: 5px 10px 18px #888888;
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 850px) {
   body {
     background-color: lightblue;
   }
