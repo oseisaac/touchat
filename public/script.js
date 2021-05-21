@@ -1,5 +1,7 @@
 const socket = io('')
 
+var peer = new Peer(); 
+
 var messages = document.getElementById('messages');
       var form = document.getElementById('form');
       var input = document.getElementById('input');
@@ -25,3 +27,16 @@ var messages = document.getElementById('messages');
         messages.appendChild(item);
         window.scrollTo(0, document.body.scrollHeight);
       });
+
+      
+      var video = document.querySelector("#videoElement");
+
+      if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then(function (stream) {
+            video.srcObject = stream;
+          })
+          .catch(function (err0r) {
+            console.log("Something went wrong!");
+          });
+      }

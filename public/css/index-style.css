@@ -7,6 +7,9 @@ body{
     text-align: center;
     padding-bottom: 1%;
 }
+#logo {
+    width:50%;
+}
 h1{
     text-align: center;
     color:#3399ff;

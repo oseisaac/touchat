@@ -2,12 +2,17 @@
       <a href="/"><img src="{{image}}" alt="touchat"></a>
     </div>
     <div id ="video-area">
-      
 
+      <video autoplay="true" id="videoElement"></video>
+      
       <div id ="control-area">
         <!-- BUTTON CONTROLS TO BE ADDED
         BUTTON FOR VIDEO, AUDIO, AND LINK TO /CHATROOM/{{TITLE}}
         -->
+        <button class="controls"> <i class="fa fa-video-camera" style="font-size:24px; "></i></button>
+        <button class="controls"> <i class="fa fa-microphone" style="font-size:24px;"></i></button>
+        <button class="controls" onclick='alert("/{{title}}")' id="copy"> <i class="fa fa-share" style="font-size:24px;" ></i></button>
+
       </div>
 
     </div>
@@ -24,6 +29,7 @@
     <script src="script.js" defer></script>
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
     <script>
       const ROOM_ID = "{{title}}"
        var width = screen.width;
@@ -33,7 +39,7 @@
         document.getElementById('chat-area').style.display='block'; 
       }
     
-    //changing desktop to mobile state
+    //changing desktop to mobile state and vice versa
       var width = $(window).width();
       $(window).resize(function(){
       if($(this).width() != width){
@@ -49,14 +55,14 @@
         }
       });
       //closing chat
-      $("#chatState").click(function(){
-        $('#chat-area').hide();
-        $('#chat-down').show();
+      $("#chat-title").click(function(){
+        $('#chat-area').slideToggle();
+        $('#chat-down').slideToggle();
       });
       //opening chat
       $("#chat-down").click(function(){
-        $('#chat-area').show();
-        $('#chat-down').hide();
+        $('#chat-area').slideToggle();
+        $('#chat-down').slideToggle();
       });
 
       

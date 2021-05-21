@@ -32,7 +32,7 @@ app.get('/chatroom/:id', (req, res) => {
   let id = req.params.id;
   let name = req.query.name;
   res.render('chatroom',{
-    title:"Touchat | "+id,
+    title: id,
     style:"../css/chat-style.css",
     image:'../images/logo.png',
     name: name
@@ -43,7 +43,7 @@ app.get('/chatroom/', (req, res) => {
   let id = req.query.chatid;
   let name = req.query.name;
   res.render('chatroom',{
-    title:"Touchat | "+id,
+    title:id,
     style:"/css/chat-style.css",
     image:'images/logo.png',
     name: name
@@ -69,16 +69,7 @@ io.on('connection', (socket) => {
       io.to(room).emit('chat message', msg);
     });
 });
-/*
-socket.on('join-room', (roomId, userId) => {
-  socket.join(roomId)
-  socket.to(roomId).broadcast.emit('user-connected', userId)
 
-  socket.on('disconnect', () => {
-    socket.to(roomId).broadcast.emit('user-disconnected', userId)
-  })
-})
-*/
 });
 
 http.listen(port, () => {
