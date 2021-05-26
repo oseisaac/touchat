@@ -1,6 +1,7 @@
 const socket = io('')
 
 
+
 var messages = document.getElementById('messages');
       var form = document.getElementById('form');
       var input = document.getElementById('input');
@@ -15,10 +16,7 @@ var messages = document.getElementById('messages');
 
       //Issue: the messages are emitted to all the rooms
       
-      socket.on('connect', function() {
-        // Connected, let's sign-up for to receive messages for this room
-         socket.emit('room', 'room');
-      });
+     
 
       socket.on('chat message', function(msg) {
         var item = document.createElement('li');
@@ -41,31 +39,31 @@ var messages = document.getElementById('messages');
         video: true,
         audio: true
     }).then(stream => {
-        addVideoStream(myVideo, stream) 
+        addVideo(myVideo, stream) 
     
         peer.on('call', call => { 
             call.answer(stream) 
             const thatVideo = document.createElement('video') 
             call.on('stream', userVideoStream => { 
-                addVideoStream(thatVideo, userVideoStream) 
+              addVideo(thatVideo, userVideoStream) 
             })
         })
     
         socket.on('user-connected', userId => { // If a new user connect
-            connectToNewUser(userId, stream) 
+          connectUser(userId, stream) 
         })
     })
     
     peer.on('open', id => { // When we first open the app, have us join a room
-        socket.emit('join-room', ROOM_ID, id)
+        socket.emit('room', ROOM_ID, id)
     })
     
-    function connectToNewUser(userId, stream) { // This runs when someone joins our room
-        const call = peer.call(userId, stream) // Call the user who just joined
+    function connectUser(userId, stream) { 
+        const call = peer.call(userId, stream) 
         // Add their video
-        const thatVideo = document.createElement('video') 
+        const userVideo = document.createElement('video') 
         call.on('stream', userVideoStream => {
-            addVideoStream(thatVideo, userVideoStream)
+          addVideo(userVideo, userVideoStream)
         })
         // If they leave, remove their video
         call.on('close', () => {
@@ -74,10 +72,10 @@ var messages = document.getElementById('messages');
     }
     
     
-    function addVideoStream(video, stream) {
+    function addVideo(video, stream) {
         video.srcObject = stream 
         video.addEventListener('loadedmetadata', () => { // Play the video as it loads
             video.play()
         })
-        videoArea.append(video) // Append video element to videoGrid
+        videoArea.append(video) 
     }

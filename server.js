@@ -7,6 +7,9 @@ const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 
 
+
+
+
 const port = process.env.PORT || 3000;
 
 
@@ -64,11 +67,13 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
   
   
-  socket.on('room', function(room) {
+  socket.on('room', (room,userId) =>{
     socket.join(room);
     socket.on('chat message', msg => {
       io.to(room).emit('chat message', msg);
+      socket.to(room).emit('user-connected', userId)
     });
+    
    
 });
 
