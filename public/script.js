@@ -1,6 +1,5 @@
 const socket = io('')
 
-var peer = new Peer(); 
 
 var messages = document.getElementById('messages');
       var form = document.getElementById('form');
@@ -27,16 +26,58 @@ var messages = document.getElementById('messages');
         messages.appendChild(item);
         window.scrollTo(0, document.body.scrollHeight);
       });
+      var peer = new Peer(ROOM_ID);
 
-      
-      var video = document.querySelector("#videoElement");
 
-      if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true })
-          .then(function (stream) {
-            video.srcObject = stream;
-          })
-          .catch(function (err0r) {
-            console.log("Something went wrong!");
-          });
-      }
+      peer.on('open', function(id) {
+        console.log('My peer ID is: ' + id);
+      });
+
+
+      const videoArea= document.getElementById('video-area');
+      const myVideo = document.createElement('video') 
+
+      navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true
+    }).then(stream => {
+        addVideoStream(myVideo, stream) 
+    
+        peer.on('call', call => { 
+            call.answer(stream) 
+            const thatVideo = document.createElement('video') 
+            call.on('stream', userVideoStream => { 
+                addVideoStream(thatVideo, userVideoStream) 
+            })
+        })
+    
+        socket.on('user-connected', userId => { // If a new user connect
+            connectToNewUser(userId, stream) 
+        })
+    })
+    
+    peer.on('open', id => { // When we first open the app, have us join a room
+        socket.emit('join-room', ROOM_ID, id)
+    })
+    
+    function connectToNewUser(userId, stream) { // This runs when someone joins our room
+        const call = peer.call(userId, stream) // Call the user who just joined
+        // Add their video
+        const thatVideo = document.createElement('video') 
+        call.on('stream', userVideoStream => {
+            addVideoStream(thatVideo, userVideoStream)
+        })
+        // If they leave, remove their video
+        call.on('close', () => {
+            video.remove()
+        })
+    }
+    
+    
+    function addVideoStream(video, stream) {
+        video.srcObject = stream 
+        video.addEventListener('loadedmetadata', () => { // Play the video as it loads
+            video.play()
+        })
+        videoArea.append(video) // Append video element to videoGrid
+    }

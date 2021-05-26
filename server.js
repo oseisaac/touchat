@@ -6,6 +6,7 @@ const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 
+
 const port = process.env.PORT || 3000;
 
 
@@ -68,9 +69,11 @@ io.on('connection', (socket) => {
     socket.on('chat message', msg => {
       io.to(room).emit('chat message', msg);
     });
+   
 });
 
 });
+
 
 http.listen(port, () => {
   console.log(`Sever is running at http://localhost:${port}/`);
