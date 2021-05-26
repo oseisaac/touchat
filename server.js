@@ -67,11 +67,11 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
   
   
-  socket.on('room', (room,userId) =>{
-    socket.join(room);
+  socket.on('room', (roomId,userId) =>{
+    socket.join(roomId);
     socket.on('chat message', msg => {
-      io.to(room).emit('chat message', msg);
-      socket.to(room).emit('user-connected', userId)
+      io.to(roomId).emit('chat message', msg);
+      socket.to(roomId).broadcast.emit('user-connected', userId);
     });
     
    

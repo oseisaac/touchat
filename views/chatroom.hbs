@@ -4,12 +4,11 @@
     <div id ="video-area">
 
      
-      
       <div id ="control-area">
        
-        <button class="controls"> <i class="fa fa-video-camera" style="font-size:24px; "></i></button>
-        <button class="controls"> <i class="fa fa-microphone" style="font-size:24px;"></i></button>
-        <button class="controls" onclick='alert("/{{title}}")' id="copy"> <i class="fa fa-share" style="font-size:24px;" ></i></button>
+        <button class="controls" id="video" onclick="changeVideoState()"> <i class="fa fa-video-camera" style="font-size:24px; "></i></button>
+        <button class="controls" id="audio" onclick="changeAudioState()"> <i class="fa fa-microphone" style="font-size:24px;"></i></button>
+        <button class="controls" onclick='alert("Copy link: https://touchat-app.herokuapp.com/chatroom/{{title}}")' id="copy"> <i class="fa fa-share" style="font-size:24px;" ></i></button>
 
       </div>
 

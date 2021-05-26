@@ -55,6 +55,7 @@ video{
 }
 .controls{
 height: 55px;
+width:60px;
 padding: 10px 15px;
 background-color: #2f80ec;
 border: none;

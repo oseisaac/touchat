@@ -14,7 +14,7 @@ var messages = document.getElementById('messages');
         }
       });
 
-      //Issue: the messages are emitted to all the rooms
+ 
       
      
 
@@ -25,20 +25,24 @@ var messages = document.getElementById('messages');
         window.scrollTo(0, document.body.scrollHeight);
       });
       var peer = new Peer(ROOM_ID);
-
+      
 
       peer.on('open', function(id) {
         console.log('My peer ID is: ' + id);
       });
-
+      
 
       const videoArea= document.getElementById('video-area');
       const myVideo = document.createElement('video') 
 
+      var videoState= true;
+      var audioState = true;
+
+    function startVideo(){
       navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true
-    }).then(stream => {
+        video: videoState,
+        audio: audioState
+      }).then(stream => {
         addVideo(myVideo, stream) 
     
         peer.on('call', call => { 
@@ -49,10 +53,13 @@ var messages = document.getElementById('messages');
             })
         })
     
-        socket.on('user-connected', userId => { // If a new user connect
+        socket.on('user-connected', userId => { // If a new user connects
+          console.log('debug')
           connectUser(userId, stream) 
         })
     })
+  }
+  startVideo()
     
     peer.on('open', id => { // When we first open the app, have us join a room
         socket.emit('room', ROOM_ID, id)
@@ -60,22 +67,58 @@ var messages = document.getElementById('messages');
     
     function connectUser(userId, stream) { 
         const call = peer.call(userId, stream) 
-        // Add their video
+        // Add video to room
         const userVideo = document.createElement('video') 
         call.on('stream', userVideoStream => {
           addVideo(userVideo, userVideoStream)
         })
-        // If they leave, remove their video
+        // Remove video for user leaving
         call.on('close', () => {
             video.remove()
         })
     }
     
-    
+    //add video to stream
     function addVideo(video, stream) {
         video.srcObject = stream 
-        video.addEventListener('loadedmetadata', () => { // Play the video as it loads
+        video.addEventListener('loadedmetadata', () => { 
             video.play()
         })
         videoArea.append(video) 
     }
+
+
+    //Disable and enable mic and video
+
+    function changeVideoState(){
+      var icon = document.getElementById('video')
+      if(videoState==true)
+      {
+        videoState=false;
+        icon.innerHTML='<i class="fas fa-video-slash" style="font-size:24px; "></i>';
+      }
+      else{
+        videoState=true;
+        icon.innerHTML='<i class="fa fa-video-camera" style="font-size:24px; "></i>';
+      }  
+      
+      startVideo()
+
+    }
+
+    function changeAudioState(){
+      var icon = document.getElementById('audio')
+      if(audioState==true)
+      {
+        audioState=false;
+        icon.innerHTML='<i class="fas fa-microphone-slash" style="font-size:24px;"></i>';
+      }
+      else{
+        audioState=true;
+        icon.innerHTML='<i class="fa fa-microphone" style="font-size:24px;"></i>';
+      }  
+      startVideo()
+      
+    }
+    
+    
