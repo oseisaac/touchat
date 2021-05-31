@@ -9,7 +9,6 @@ const favicon = require('serve-favicon');
 
 
 
-
 const port = process.env.PORT || 3000;
 
 
@@ -27,20 +26,41 @@ app.use(express.static('public'))
 app.use("/css",express.static(__dirname + '/public/css'))
 app.use("/images",express.static(__dirname + '/public/images'))
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
+=======
+app.engine('hbs', hbs({
+  extname: 'hbs',
+  defaultLayout: 'layout',
+  layoutsDir: __dirname + '/views/layouts/'
+}));
 
-const urlencodeParser = bodyParser.urlencoded({extended:false})
+
+app.set('view engine', 'hbs');
+app.use(express.static('public'))
+
+app.use("/css", express.static(__dirname + '/public/css'))
+app.use("/images", express.static(__dirname + '/public/images'))
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
+
+const urlencodeParser = bodyParser.urlencoded({ extended: false })
 
 
 //GET methods
 app.get('/chatroom/:id', (req, res) => {
   let id = req.params.id;
   let name = req.query.name;
+
   res.render('chatroom',{
     title: id,
     style:"../css/chat-style.css",
     image:'../images/logo.png',
     name: name
     
+  res.render('chatroom', {
+    title: id,
+    style: "../css/chat-style.css",
+    image: '../images/logo.png',
+    name: name
+
   })
 });
 app.get('/chatroom/', (req, res) => {
@@ -52,13 +72,19 @@ app.get('/chatroom/', (req, res) => {
     image:'images/logo.png',
     name: name
     
+  res.render('chatroom', {
+    title: id,
+    style: "/css/chat-style.css",
+    image: 'images/logo.png',
+    name: name
+
   })
 });
 app.get('/', (req, res) => {
-  res.render('index',{
-    title:'Touchat',
-    style:"/css/index-style.css"
-    
+  res.render('index', {
+    title: 'Touchat',
+    style: "/css/index-style.css"
+
   })
 });
 
@@ -76,6 +102,26 @@ io.on('connection', (socket) => {
     
    
 });
+
+
+  socket.on('joinRoom', (roomId, userId) => {
+    socket.join(roomId);
+
+    //welcome the current user
+    socket.emit('chat message', "Welcome to Touchat");
+
+    socket.broadcast.to(roomId).emit('chat message', userId);
+
+  })
+
+  socket.on('room', (roomId, userId) => {
+    socket.on('chat message', msg => {
+      io.to(roomId).emit('chat message', msg);
+      socket.broadcast.to(roomId).emit('user-connected', userId);
+    });
+
+
+  });
 
 });
 
