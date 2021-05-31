@@ -26,7 +26,15 @@ Installing Node.js
   ```
 
 
+You will need to download the following dependencies
 
+* npm
+  ```sh
+  $ npm install http
+  $ npm install socket.io
+  $ npm install express-handlebars
+  $ npm install body-parser
+  ```
 
 
 
@@ -40,13 +48,6 @@ Installing Node.js
    ```sh
     node server.js
    ```
-   
-You will need to download dependencies using the following command
-
-* npm
-  ```sh
-  $ npm install 
-  ```
 
 
 
