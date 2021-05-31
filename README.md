@@ -3,6 +3,8 @@
 
 A chat application that allows video conferencing.
 
+A sample demo of current progress: https://touchat-app.herokuapp.com/chatroom?chatid=d
+
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -74,8 +76,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 
 
-<!-- CONTACT -->
-## Contact
 
-Ahmed Abdelfattah - [@ahmedwab](https://linkedin.com/in/ahmedwab) - linkedin
 

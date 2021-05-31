@@ -7,6 +7,9 @@ body{
     text-align: center;
     padding-bottom: 1%;
 }
+#logo {
+    width:50%;
+}
 h1{
     text-align: center;
     color:#3399ff;
@@ -21,7 +24,16 @@ h2{
       color:#0000b3
 }
 
+#name{
+   width:20%;
+    height:48px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
 
+}
 
 #chatid{
     width:40%;
@@ -34,7 +46,7 @@ h2{
 #enterRoom{
    height: 50px;
   padding: 15px 15px;
-  background-color: #3399ff; 
+  background-color: #52a39e; 
   border: none;
   color: white;
   text-align: center;
@@ -44,6 +56,6 @@ h2{
 }
 #enterRoom:hover{
    
-  background-color: #0000b3; 
+  background-color: #0a192f; 
   cursor:pointer;
 }

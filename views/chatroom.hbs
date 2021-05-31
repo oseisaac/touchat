@@ -1,89 +1,71 @@
+    
+    <div id="title-section">
+      <a href="/"><img src="{{image}}" alt="touchat"></a>
+    </div>
     <div id ="video-area">
-      <video autoplay="true" id="videoElement" class="videos"></video>
 
+     
       <div id ="control-area">
-        <button id="video"class="controls" onclick="changeVideo()">&#128249;</button>
-        <button id="audio" class="controls" onclick="changeAudio()"> &#x1F508;</button>
+       
+        <button class="controls" id="video" onclick="changeVideoState()"> <i class="fa fa-video-camera" style="font-size:24px; "></i></button>
+        <button class="controls" id="audio" onclick="changeAudioState()"> <i class="fa fa-microphone" style="font-size:24px;"></i></button>
+        <button class="controls" onclick='alert("Copy link: https://touchat-app.herokuapp.com/chatroom/{{title}}")' id="copy"> <i class="fa fa-share" style="font-size:24px;" ></i></button>
+
       </div>
+
     </div>
     <div id="chat-area">
+      <div id="chat-title">Chat <button id="chatState" ><i class="arrow down"></i></button></div>
+      {{name}}
     <ul id="messages"></ul>
     <form id="form" action="">
-      <input id="input" autocomplete="off" /><button id="send-button">Send</button>
+      <input id="input" autocomplete="off" placeholder="Type message here"/><button id="send-button">Send</button>
     </form>
     </div>
+     <div id="chat-down">Chat <button id="chatState" ><i class="arrow up"></i></button></div>
 
+    <script src="script.js" defer></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
     <script>
-      var video=true;
-      var audio=true;
+      const ROOM_ID = "{{title}}"
+       var width = screen.width;
 
-      function changeVideo() {
-        if(video==true){
-        document.getElementById('video').innerHTML="No video";
-        video=false;
-        }
-        else{
-           document.getElementById('video').innerHTML="&#128249;";
-          video=true;
-        }
+       
+      if (width >= '800px') { 
+        document.getElementById('chat-area').style.display='block'; 
       }
-
-       function changeAudio() {
-         if(audio==true){
-        document.getElementById('audio').innerHTML="&#128263;";
-        audio=false;
+    
+    //changing desktop to mobile state and vice versa
+      var width = $(window).width();
+      $(window).resize(function(){
+      if($(this).width() != width){
+          width = $(this).width();
+          if(width>850){
+          $('#chat-area').show();
+          $('#chat-down').hide();
+          }
+          if(width<=850){
+          $('#chat-area').hide();
+          $('#chat-down').show();
+          }
         }
-        else{
-          document.getElementById('audio').innerHTML="&#x1F508;";
-          audio=true;
-        }
-        
-        
-      }
+      });
+      //closing chat
+      $("#chat-title").click(function(){
+        $('#chat-area').slideToggle();
+        $('#chat-down').slideToggle();
+      });
+      //opening chat
+      $("#chat-down").click(function(){
+        $('#chat-area').slideToggle();
+        $('#chat-down').slideToggle();
+      });
 
-      var video = document.querySelector("#videoElement");
-
-if (navigator.mediaDevices.getUserMedia) {
-  navigator.mediaDevices.getUserMedia({ video: true })
-    .then(function (stream) {
-      video.srcObject = stream;
-    })
-    .catch(function (err0r) {
-      console.log("Something went wrong!");
-    });
-}
+      
     </script>
-
-
-    <script>
-      var socket = io();
-
-      var messages = document.getElementById('messages');
-      var form = document.getElementById('form');
-      var input = document.getElementById('input');
-
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (input.value) {
-          socket.emit('chat message', input.value);
-          input.value = '';
-        }
-      });
-
-      //Issue: the messages are emitted to all the rooms
-      var room ="{{title}}"
-      socket.on('connect', function() {
-        // Connected, let's sign-up for to receive messages for this room
-         socket.emit('room', '{{title}}');
-      });
-
-      socket.on('chat message', function(msg) {
-        var item = document.createElement('li');
-        item.textContent = msg;
-        messages.appendChild(item);
-        window.scrollTo(0, document.body.scrollHeight);
-      });
-    </script>
+    
 
     
 
