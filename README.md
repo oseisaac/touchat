@@ -5,6 +5,7 @@ A chat application that allows video conferencing.
 
 A sample demo of current progress: https://touchat-app.herokuapp.com/chatroom?chatid=d
 
+<img src  = "appScreenshot.png" alt ="TOUCHAT">
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -26,15 +27,7 @@ Installing Node.js
   ```
 
 
-You will need to download the following dependencies
 
-* npm
-  ```sh
-  $ npm install http
-  $ npm install socket.io
-  $ npm install express-handlebars
-  $ npm install body-parser
-  ```
 
 
 
@@ -48,6 +41,13 @@ You will need to download the following dependencies
    ```sh
     node server.js
    ```
+   
+You will need to download dependencies using the following command
+
+* npm
+  ```sh
+  $ npm install 
+  ```
 
 
 
